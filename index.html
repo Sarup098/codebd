@@ -45,7 +45,6 @@
             background-repeat: no-repeat;
         }
 
-        /* FIX: Adjusted keyframes for better visibility */
         @keyframes drift {
             0% {
                 transform: translateY(0) rotate(-10deg);
@@ -203,7 +202,8 @@
                     </div>
 
                     <h2 class="text-4xl font-semibold mb-4 text-white">Will You Join Me?</h2>
-                    <form id="rsvp-form" class="space-y-4 text-left">
+                    <!-- The form no longer needs an ID -->
+                    <form class="space-y-4 text-left">
                         <div>
                             <label for="name" class="block text-sm font-medium text-white/90">Your Name:</label>
                             <input type="text" id="name" name="name" required class="mt-1 block w-full bg-black/20 border-transparent rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-white/50 placeholder-white/60" placeholder="ASSna">
@@ -211,8 +211,8 @@
                         <div>
                             <label class="block text-sm font-medium text-white/90">Your Answer:</label>
                             <div class="mt-2 space-y-2">
-                                <label class="inline-flex items-center"><input type="radio" name="attendance" value="yes" class="form-radio text-pink-400 focus:ring-pink-500" checked><span class="ml-2 text-white/90">Yes, a thousand times yes!</span></label><br>
-                                <label class="inline-flex items-center"><input type="radio" name="attendance" value="absolutely" class="form-radio text-pink-400 focus:ring-pink-500"><span class="ml-2 text-white/90">Of course! Can't wait!</span></label>
+                                <label class="inline-flex items-center"><input type="radio" name="attendance" value="Yes, a thousand times yes!" class="form-radio text-pink-400 focus:ring-pink-500" checked><span class="ml-2 text-white/90">Yes, a thousand times yes!</span></label><br>
+                                <label class="inline-flex items-center"><input type="radio" name="attendance" value="Of course! Can't wait!" class="form-radio text-pink-400 focus:ring-pink-500"><span class="ml-2 text-white/90">Of course! Can't wait!</span></label>
                             </div>
                         </div>
                          <div>
@@ -220,10 +220,10 @@
                             <textarea id="message-response" name="message" rows="3" class="mt-1 block w-full bg-black/20 border-transparent rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-white/50 placeholder-white/60"></textarea>
                         </div>
                         <div>
-                            <button type="submit" class="w-full bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 px-4 rounded-full transition duration-300 transform hover:scale-105">Send My Response</button>
+                            <!-- Changed button type to 'button' to prevent default form submission -->
+                            <button type="button" id="send-to-whatsapp" class="w-full bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 px-4 rounded-full transition duration-300 transform hover:scale-105">Send My Response</button>
                         </div>
                     </form>
-                    <div id="form-success-message" class="hidden mt-4 p-4 text-center bg-green-900/50 text-green-300 rounded-lg"><p>Thank you! Your response has been sent. I'm so excited!</p></div>
                 </div>
             </div>
         </main>
@@ -245,27 +245,36 @@
             indicator.style.transform = `translateX(${clickedButton.offsetLeft}px)`;
         }
 
-        // --- Form Submission Logic ---
-        const form = document.getElementById('rsvp-form');
-        form.addEventListener('submit', function(event) {
-            event.preventDefault();
-            const formData = new FormData(form);
-            console.log('--- RSVP Received ---');
-            console.log('Name:', formData.get('name'));
-            console.log('Attendance:', formData.get('attendance'));
-            console.log('Message:', formData.get('message'));
-            console.log('---------------------');
-            form.style.display = 'none';
-            document.getElementById('form-success-message').classList.remove('hidden');
+        // --- NEW WhatsApp Redirect Logic ---
+        const whatsappButton = document.getElementById('send-to-whatsapp');
+        whatsappButton.addEventListener('click', function() {
+            const name = document.getElementById('name').value;
+            // Find the selected radio button's value
+            const attendance = document.querySelector('input[name="attendance"]:checked').value;
+            const message = document.getElementById('message-response').value;
+            
+            // Your WhatsApp number without '+' or spaces
+            const phoneNumber = '919907488075';
+
+            // Construct the pre-filled message
+            let whatsappMessage = `Hey Sarup! It's ${name}.\n\nMy answer for our date is: *${attendance}*`;
+            if (message) {
+                whatsappMessage += `\n\nAnd a little something for you:\n_"${message}"_`;
+            }
+
+            // Create the WhatsApp URL
+            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(whatsappMessage)}`;
+
+            // Redirect the user to WhatsApp
+            window.open(whatsappUrl, '_blank');
         });
 
         // --- On Page Load Logic ---
         document.addEventListener('DOMContentLoaded', function() {
             // --- Particle Generation ---
             const particleContainer = document.querySelector('.background-container');
-            const particleCount = 12; // Increased count for more variety
+            const particleCount = 12; 
             
-            // Replaced placeholders with your permanent GitHub links
             const imageUrls = [
                 'https://raw.githubusercontent.com/Sarup098/codebd/main/Untitled_Artwork.jpg',
                 'https://raw.githubusercontent.com/Sarup098/codebd/main/IMG_8211.PNG',
