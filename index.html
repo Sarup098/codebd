@@ -79,6 +79,8 @@
             flex-direction: column;
             height: 80vh; /* Increased height slightly */
             max-height: 700px;
+            /* FIX: Promotes this element to its own rendering layer for smoother scrolling on iOS */
+            transform: translateZ(0);
         }
         
         .content-area {
