@@ -12,20 +12,157 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            /* New dark background inspired by the drawing */
             background-color: #1a1a1a;
-            background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.1) 1px, transparent 0);
-            background-size: 25px 25px;
             color: #fff;
             overflow: hidden;
         }
 
-        /* Using the handwritten font for headings */
+        /* --- NEW Cake Intro Styles --- */
+        #cake-intro {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Restored light pink dynamic gradient */
+            background: linear-gradient(135deg, #ffdde1, #ffc3a0, #ff9a9e);
+            background-size: 400% 400%;
+            animation: gradient-animation 10s ease infinite;
+            /* Added subtle pattern overlay */
+            background-image: linear-gradient(135deg, #ffdde1, #ffc3a0, #ff9a9e), url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 1s ease-in-out;
+            overflow: hidden;
+        }
+        .intro-shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.5;
+            z-index: 0;
+        }
+        .intro-shape-1 {
+            width: 300px;
+            height: 300px;
+            background: #ffafbd;
+            top: -100px;
+            left: -100px;
+            animation: intro-move 15s infinite alternate ease-in-out;
+        }
+        .intro-shape-2 {
+            width: 350px;
+            height: 350px;
+            background: #e6d4ff;
+            bottom: -150px;
+            right: -150px;
+            animation: intro-move 18s infinite alternate ease-in-out -4s;
+        }
+        @keyframes intro-move {
+            from { transform: translate(0, 0) scale(1); }
+            to { transform: translate(40px, 20px) scale(1.1); }
+        }
+
+        #cake-container {
+            position: relative;
+            width: 350px;
+            height: 350px;
+            z-index: 1;
+        }
+        .cake-piece {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transition: transform 1s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+        #cake-right {
+            z-index: 2;
+        }
+        
+        #cake-text {
+            font-family: 'Caveat', cursive;
+            font-size: 2.2rem;
+            /* New dark lavender color */
+            color: #5c5470;
+            text-shadow: 0 1px 2px rgba(255,255,255,0.2);
+            position: absolute;
+            top: 35%;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            line-height: 1;
+            pointer-events: none;
+            z-index: 3;
+        }
+        #swipe-instruction {
+            margin-top: 2rem;
+            font-family: 'Caveat', cursive;
+            font-size: 1.5rem;
+            color: #8c5a5a;
+            opacity: 0.8;
+            animation: pulse 2s infinite;
+            z-index: 1;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 0.4; }
+        }
+        #cut-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 4;
+        }
+
+        /* --- Confetti Styles --- */
+        #confetti-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #f00;
+            opacity: 0;
+            animation: fall 7s linear forwards;
+        }
+        @keyframes fall {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(1080deg); opacity: 0; }
+        }
+
+        /* --- Main Content Styles (initially hidden) --- */
+        #main-content {
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.1) 1px, transparent 0);
+            background-size: 25px 25px;
+        }
+
+        @keyframes gradient-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
         h1, h2, h3, h4 {
             font-family: 'Caveat', cursive;
         }
 
-        /* --- Animated Background Elements --- */
         .background-container {
             position: fixed;
             top: 0;
@@ -35,10 +172,9 @@
             z-index: 0;
         }
         
-        /* Particles are now your drawings */
         .particle {
             position: absolute;
-            bottom: -150px; /* Start off-screen */
+            bottom: -150px;
             animation: drift 20s infinite linear;
             opacity: 0;
             background-size: contain;
@@ -46,23 +182,12 @@
         }
 
         @keyframes drift {
-            0% {
-                transform: translateY(0) rotate(-10deg);
-                opacity: 0;
-            }
-            20% {
-                opacity: 0.4; /* Fade in */
-            }
-            80% {
-                opacity: 0.4; /* Stay visible */
-            }
-            100% {
-                transform: translateY(-120vh) rotate(60deg);
-                opacity: 0; /* Fade out at the very end */
-            }
+            0% { transform: translateY(0) rotate(-10deg); opacity: 0; }
+            20% { opacity: 0.4; }
+            80% { opacity: 0.4; }
+            100% { transform: translateY(-120vh) rotate(60deg); opacity: 0; }
         }
 
-        /* --- New Glass UI for Dark Theme --- */
         .glass-ui {
             background: rgba(30, 30, 30, 0.5);
             backdrop-filter: blur(40px);
@@ -77,35 +202,26 @@
         .main-card {
             display: flex;
             flex-direction: column;
-            height: 80vh; /* Increased height slightly */
+            height: 80vh;
             max-height: 700px;
-            /* FIX: Promotes this element to its own rendering layer for smoother scrolling on iOS */
             transform: translateZ(0);
         }
         
         .content-area {
             flex-grow: 1;
             overflow-y: auto;
-            /* Added more padding for better scrolling feel */
             padding: 0 1.5rem 3rem; 
             -webkit-overflow-scrolling: touch;
         }
 
-        /* --- Liquid Tab Styles --- */
         .tab-button {
             transition: color 0.3s ease;
             background: transparent;
             border: 1px solid transparent;
             color: rgba(255, 255, 255, 0.6);
         }
-        .tab-button.active {
-            color: #fff;
-        }
-        .tab-button svg {
-            width: 24px;
-            height: 24px;
-            margin: 0 auto;
-        }
+        .tab-button.active { color: #fff; }
+        .tab-button svg { width: 24px; height: 24px; margin: 0 auto; }
         #tab-indicator {
             position: absolute;
             top: 0;
@@ -120,129 +236,134 @@
         }
 
         .tab-content { display: none; }
-        .tab-content.active {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
+        .tab-content.active { display: block; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .content-area::-webkit-scrollbar { width: 6px; }
         .content-area::-webkit-scrollbar-track { background: transparent; }
-        .content-area::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-        }
+        .content-area::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 10px; }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-4">
+<body>
 
-    <div class="background-container">
-        <!-- Your drawings will be generated here by JS -->
+    <!-- NEW Cake Cutting Intro with your PNGs -->
+    <div id="cake-intro">
+        <div class="intro-shape intro-shape-1"></div>
+        <div class="intro-shape intro-shape-2"></div>
+        <div id="confetti-container"></div>
+        <div id="cake-container">
+            <img id="cake-left" class="cake-piece" src="https://raw.githubusercontent.com/Sarup098/codebd/main/IMG_8237.png" alt="Left side of cake">
+            <img id="cake-right" class="cake-piece" src="https://raw.githubusercontent.com/Sarup098/codebd/main/IMG_8238.png" alt="Right side of cake">
+            <div id="cake-text">Happy<br>Birthday<br>ASSna</div>
+            <canvas id="cut-canvas"></canvas>
+        </div>
+        <div id="swipe-instruction">Swipe down to cut the cake!</div>
     </div>
 
-    <div class="w-full max-w-md mx-auto">
-        <header class="text-center mb-6">
-            <h1 class="text-5xl font-bold text-white">Happy Birthday ASSna</h1>
-            <p class="text-white/80 mt-1 text-lg">You are my sweetest blessing and my sexiest addiction.</p>
-        </header>
-
-        <main class="glass-ui main-card">
-            <div class="relative flex justify-around space-x-2 p-2 glass-ui rounded-full m-4">
-                <div id="tab-indicator"></div>
-                <button class="tab-button w-full py-2 px-4 rounded-full active z-10" onclick="showTab('message', this)" title="Message">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg>
-                </button>
-                <button class="tab-button w-full py-2 px-4 rounded-full z-10" onclick="showTab('video', this)" title="Video">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15.91 11.672a.375.375 0 010 .656l-5.603 3.113a.375.375 0 01-.557-.328V8.887c0-.286.357-.466.557-.327l5.603 3.112z" /></svg>
-                </button>
-                <button class="tab-button w-full py-2 px-4 rounded-full z-10" onclick="showTab('date-night', this)" title="Date Night">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" /></svg>
-                </button>
-            </div>
-
-            <div class="content-area">
-                <!-- Message Tab -->
-                <div id="message" class="tab-content active">
-                    <h2 class="text-4xl font-semibold mb-4 text-white">From My Heart</h2>
-                    <!-- Added bottom padding to this div to create scrollable space -->
-                    <div class="space-y-4 text-white/90 pb-40">
-                        <p>Thank you for being everything to me ... muahhh, my perfect girlfriend.</p>
-                        <p>I wanna kiss every little insecurity till they disappear, I wanna kiss the path you walk on, I wanna worship you like my goddess… and then f you hard till you are  screaming SARUPP to stop.</p>
-                        <p>I cannot wait for the day I finally get to eat you up. Distance can't kill what I feel for you. You are mine, only mine.</p>
-                        <p>Now send me a sexy snap baby, I need my gift too.</p>
-                        <p>Forever yours!</p>
-                    </div>
+    <!-- Main Content (initially hidden) -->
+    <div id="main-content" class="min-h-screen flex items-center justify-center p-4">
+        <div class="background-container"></div>
+        <div class="w-full max-w-md mx-auto">
+            <header class="text-center mb-6">
+                <h1 class="text-5xl font-bold text-white">Happy Birthday ASSna</h1>
+                <p class="text-white/80 mt-1 text-lg">You are my sweetest blessing and my sexiest addiction.</p>
+            </header>
+            <main class="glass-ui main-card">
+                <div class="relative flex justify-around space-x-2 p-2 glass-ui rounded-full m-4">
+                    <div id="tab-indicator"></div>
+                    <button class="tab-button w-full py-2 px-4 rounded-full active z-10" onclick="showTab('message', this)" title="Message"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg></button>
+                    <button class="tab-button w-full py-2 px-4 rounded-full z-10" onclick="showTab('video', this)" title="Video"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15.91 11.672a.375.375 0 010 .656l-5.603 3.113a.375.375 0 01-.557-.328V8.887c0-.286.357-.466.557-.327l5.603 3.112z" /></svg></button>
+                    <button class="tab-button w-full py-2 px-4 rounded-full z-10" onclick="showTab('date-night', this)" title="Date Night"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" /></svg></button>
                 </div>
-
-                <!-- Video Tab -->
-                <div id="video" class="tab-content">
-                    <h2 class="text-4xl font-semibold mb-4 text-white">For You</h2>
-                    <div class="aspect-w-9 aspect-h-16 max-w-xs mx-auto rounded-lg overflow-hidden border-2 border-white/30">
-                        <iframe src="https://www.youtube.com/embed/c3MpiDSshRo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    </div>
-                     <p class="text-sm text-center mt-4 text-white/70">A compilation of our favorite moments.</p>
+                <div class="content-area">
+                    <div id="message" class="tab-content active"><h2 class="text-4xl font-semibold mb-4 text-white">From My Heart</h2><div class="space-y-4 text-white/90 pb-40"><p>Thank you for being everything to me ... muahhh, my perfect girlfriend.</p><p>I wanna kiss every little insecurity till they disappear, I wanna kiss the path you walk on, I wanna worship you like my goddess… and then f you hard till you are  screaming SARUPP to stop.</p><p>I cannot wait for the day I finally get to eat you up. Distance can't kill what I feel for you. You are mine, only mine.</p><p>Now send me a sexy snap baby, I need my gift too.</p><p>Forever yours!</p></div></div>
+                    <div id="video" class="tab-content"><h2 class="text-4xl font-semibold mb-4 text-white">For You</h2><div class="aspect-w-9 aspect-h-16 max-w-xs mx-auto rounded-lg overflow-hidden border-2 border-white/30"><iframe src="https://www.youtube.com/embed/c3MpiDSshRo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><p class="text-sm text-center mt-4 text-white/70">A small gift for my fav. Girl!</p></div>
+                    <div id="date-night" class="tab-content text-center"><h2 class="text-4xl font-semibold mb-4 text-white">You're Invited!</h2><div class="bg-black/20 p-6 rounded-lg mb-6 text-left"><h3 class="text-4xl font-bold mb-3 text-white text-center">Jhalmuri Date Night</h3><p class="text-white/90 mb-2"><strong class="font-semibold">When:</strong> August 27th</p><p class="text-white/90 mb-4"><strong class="font-semibold">Time:</strong> 9:00 PM onwards</p><p class="text-white/80 mb-4">Let's make and eat Jhalmuri together!  At the end, we'll click a screenshot to remember our perfect date.</p><h4 class="font-semibold text-white mb-2 text-2xl">Your Ingredient Checklist:</h4><ul class="list-disc list-inside text-white/80 space-y-1"><li>Puffed rice (Muri)</li><li>wai-wai(veg ofcc)</li><li>Green chillies (or thika laal)</li><li>anything else you can lemon, onion, etc</li></ul></div><h2 class="text-4xl font-semibold mb-4 text-white">Will You Join Me?</h2><form class="space-y-4 text-left"><div><label for="name" class="block text-sm font-medium text-white/90">Your Name:</label><input type="text" id="name" name="name" required class="mt-1 block w-full bg-black/20 border-transparent rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-white/50 placeholder-white/60" placeholder="ASSna"></div><div><label class="block text-sm font-medium text-white/90">Your Answer:</label><div class="mt-2 space-y-2"><label class="inline-flex items-center"><input type="radio" name="attendance" value="Yes, a thousand times yes!" class="form-radio text-pink-400 focus:ring-pink-500" checked><span class="ml-2 text-white/90">Yes, a thousand times yes!</span></label><br><label class="inline-flex items-center"><input type="radio" name="attendance" value="Of course! Can't wait!" class="form-radio text-pink-400 focus:ring-pink-500"><span class="ml-2 text-white/90">Of course! Can't wait!</span></label></div></div><div><label for="message-response" class="block text-sm font-medium text-white/90">A little message for me?</label><textarea id="message-response" name="message" rows="3" class="mt-1 block w-full bg-black/20 border-transparent rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-white/50 placeholder-white/60"></textarea></div><div class="pb-32"><button type="button" id="send-to-whatsapp" class="w-full bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 px-4 rounded-full transition duration-300 transform hover:scale-105">Send My Response</button></div></form></div>
                 </div>
-
-                <!-- Merged "Date Night" Tab -->
-                <div id="date-night" class="tab-content text-center">
-                    <h2 class="text-4xl font-semibold mb-4 text-white">You're Invited!</h2>
-                    <div class="bg-black/20 p-6 rounded-lg mb-6 text-left">
-                        <h3 class="text-4xl font-bold mb-3 text-white text-center">Jhalmuri Date Night</h3>
-                        <p class="text-white/90 mb-2"><strong class="font-semibold">When:</strong> August 27th</p>
-                        <p class="text-white/90 mb-4"><strong class="font-semibold">Time:</strong> 9:00 PM onwards</p>
-                        <p class="text-white/80 mb-4">Let's make and eat Jhalmuri together!  At the end, we'll click a screenshot to remember our perfect date.</p>
-                        
-                        <h4 class="font-semibold text-white mb-2 text-2xl">Your Ingredient Checklist:</h4>
-                        <ul class="list-disc list-inside text-white/80 space-y-1">
-                            <li>Puffed rice (Muri)</li>
-                            <li>wai-wai(veg ofcc)</li>
-                            <li>Green chillies (or thika laal)</li>
-                            <li>anything else you can lemon, onion, etc</li>
-                        </ul>
-                    </div>
-
-                    <h2 class="text-4xl font-semibold mb-4 text-white">Will You Join Me?</h2>
-                    <form class="space-y-4 text-left">
-                        <div>
-                            <label for="name" class="block text-sm font-medium text-white/90">Your Name:</label>
-                            <input type="text" id="name" name="name" required class="mt-1 block w-full bg-black/20 border-transparent rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-white/50 placeholder-white/60" placeholder="ASSna">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-white/90">Your Answer:</label>
-                            <div class="mt-2 space-y-2">
-                                <label class="inline-flex items-center"><input type="radio" name="attendance" value="Yes, a thousand times yes!" class="form-radio text-pink-400 focus:ring-pink-500" checked><span class="ml-2 text-white/90">Yes, a thousand times yes!</span></label><br>
-                                <label class="inline-flex items-center"><input type="radio" name="attendance" value="Of course! Can't wait!" class="form-radio text-pink-400 focus:ring-pink-500"><span class="ml-2 text-white/90">Of course! Can't wait!</span></label>
-                            </div>
-                        </div>
-                         <div>
-                            <label for="message-response" class="block text-sm font-medium text-white/90">A little message for me?</label>
-                            <textarea id="message-response" name="message" rows="3" class="mt-1 block w-full bg-black/20 border-transparent rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-white/50 placeholder-white/60"></textarea>
-                        </div>
-                        <!-- Increased padding to the bottom of the button's container -->
-                        <div class="pb-32">
-                            <button type="button" id="send-to-whatsapp" class="w-full bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 px-4 rounded-full transition duration-300 transform hover:scale-105">Send My Response</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </main>
+            </main>
+        </div>
     </div>
 
     <script>
-        // --- Tab Switching Logic (Pure CSS) ---
+        // --- Cake Intro Logic ---
+        const cakeIntro = document.getElementById('cake-intro');
+        const cakeContainer = document.getElementById('cake-container');
+        const cakeLeft = document.getElementById('cake-left');
+        const cakeRight = document.getElementById('cake-right');
+        const mainContent = document.getElementById('main-content');
+        const canvas = document.getElementById('cut-canvas');
+        const ctx = canvas.getContext('2d');
+        let isDrawing = false;
+        let hasCut = false;
+
+        function launchConfetti() {
+            const confettiContainer = document.getElementById('confetti-container');
+            const colors = ['#f68787', '#f8a978', '#f6d55c', '#3caea3', '#20639b', '#FFFFFF'];
+            for (let i = 0; i < 250; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = `${Math.random() * 100}vw`;
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                const size = Math.random() * 10 + 5;
+                confetti.style.width = `${size}px`;
+                if (Math.random() > 0.5) { confetti.style.height = `${size}px`; } else { confetti.style.height = `${size * 2}px`; }
+                if (Math.random() > 0.8) { confetti.style.borderRadius = '50%'; }
+                confetti.style.animationDelay = `${Math.random() * 0.5}s`;
+                confetti.style.animationDuration = `${Math.random() * 3 + 4}s`;
+                confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                confettiContainer.appendChild(confetti);
+            }
+        }
+
+        function startCut(e) {
+            if (hasCut) return;
+            isDrawing = true;
+            ctx.beginPath();
+            const rect = canvas.getBoundingClientRect();
+            const x = (e.clientX || e.touches[0].clientX) - rect.left;
+            ctx.moveTo(x, 0);
+        }
+
+        function drawCut(e) {
+            if (!isDrawing || hasCut) return;
+            const rect = canvas.getBoundingClientRect();
+            const y = (e.clientY || e.touches[0].clientY) - rect.top;
+            const x = (e.clientX || e.touches[0].clientX) - rect.left;
+            ctx.lineTo(x, y);
+            ctx.strokeStyle = 'rgba(0, 0, 0, 0.2)';
+            ctx.lineWidth = 4;
+            ctx.stroke();
+            if (y > canvas.height * 0.8) { endCut(); }
+        }
+
+        function endCut() {
+            if (!isDrawing || hasCut) return;
+            isDrawing = false;
+            hasCut = true;
+            launchConfetti();
+            cakeLeft.style.transform = 'translateX(-50%) rotate(-15deg) scale(0.8)';
+            cakeRight.style.transform = 'translateX(50%) rotate(15deg) scale(0.8)';
+            setTimeout(() => {
+                cakeIntro.style.opacity = '0';
+                mainContent.style.opacity = '1';
+                setTimeout(() => cakeIntro.style.display = 'none', 1000);
+            }, 1500);
+        }
+
+        cakeContainer.addEventListener('mousedown', startCut);
+        cakeContainer.addEventListener('mousemove', drawCut);
+        window.addEventListener('mouseup', endCut);
+        cakeContainer.addEventListener('touchstart', startCut);
+        cakeContainer.addEventListener('touchmove', drawCut);
+        window.addEventListener('touchend', endCut);
+
+        // --- Tab Switching Logic ---
         function showTab(tabId, clickedButton) {
             const contents = document.querySelectorAll('.tab-content');
             contents.forEach(content => content.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
-
             const buttons = document.querySelectorAll('.tab-button');
             buttons.forEach(button => button.classList.remove('active'));
             clickedButton.classList.add('active');
-
             const indicator = document.getElementById('tab-indicator');
             indicator.style.width = `${clickedButton.offsetWidth}px`;
             indicator.style.transform = `translateX(${clickedButton.offsetLeft}px)`;
@@ -254,14 +375,11 @@
             const name = document.getElementById('name').value;
             const attendance = document.querySelector('input[name="attendance"]:checked').value;
             const message = document.getElementById('message-response').value;
-            
             const phoneNumber = '919907488075';
-
             let whatsappMessage = `Hey Sarup! It's ${name}.\n\nMy answer for our date is: *${attendance}*`;
             if (message) {
                 whatsappMessage += `\n\nAnd a little something for you:\n_"${message}"_`;
             }
-
             const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(whatsappMessage)}`;
             window.open(whatsappUrl, '_blank');
         });
@@ -270,32 +388,24 @@
         document.addEventListener('DOMContentLoaded', function() {
             // --- Particle Generation ---
             const particleContainer = document.querySelector('.background-container');
-            const particleCount = 12; 
-            
+            const particleCount = 12;
             const imageUrls = [
                 'https://raw.githubusercontent.com/Sarup098/codebd/main/Untitled_Artwork.jpg',
                 'https://raw.githubusercontent.com/Sarup098/codebd/main/IMG_8211.PNG',
                 'https://raw.githubusercontent.com/Sarup098/codebd/main/Untitled_Artwork%205.png'
             ];
-
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
-                
                 particle.style.backgroundImage = `url(${imageUrls[i % imageUrls.length]})`;
-
                 const size = Math.random() * 80 + 50;
                 particle.style.width = `${size}px`;
                 particle.style.height = `${size}px`;
-                
                 particle.style.left = `${Math.random() * 100}%`;
-                
                 const animationDuration = Math.random() * 20 + 15;
                 particle.style.animationDuration = `${animationDuration}s`;
-                
                 const animationDelay = Math.random() * 20;
                 particle.style.animationDelay = `-${animationDelay}s`;
-
                 particleContainer.appendChild(particle);
             }
             
