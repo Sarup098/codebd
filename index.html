@@ -84,7 +84,8 @@
         .content-area {
             flex-grow: 1;
             overflow-y: auto;
-            padding: 0 1.5rem 1.5rem;
+            /* Added more padding for better scrolling feel */
+            padding: 0 1.5rem 3rem; 
             -webkit-overflow-scrolling: touch;
         }
 
@@ -202,7 +203,6 @@
                     </div>
 
                     <h2 class="text-4xl font-semibold mb-4 text-white">Will You Join Me?</h2>
-                    <!-- The form no longer needs an ID -->
                     <form class="space-y-4 text-left">
                         <div>
                             <label for="name" class="block text-sm font-medium text-white/90">Your Name:</label>
@@ -220,7 +220,6 @@
                             <textarea id="message-response" name="message" rows="3" class="mt-1 block w-full bg-black/20 border-transparent rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-white/50 placeholder-white/60"></textarea>
                         </div>
                         <div>
-                            <!-- Changed button type to 'button' to prevent default form submission -->
                             <button type="button" id="send-to-whatsapp" class="w-full bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 px-4 rounded-full transition duration-300 transform hover:scale-105">Send My Response</button>
                         </div>
                     </form>
@@ -245,27 +244,21 @@
             indicator.style.transform = `translateX(${clickedButton.offsetLeft}px)`;
         }
 
-        // --- NEW WhatsApp Redirect Logic ---
+        // --- WhatsApp Redirect Logic ---
         const whatsappButton = document.getElementById('send-to-whatsapp');
         whatsappButton.addEventListener('click', function() {
             const name = document.getElementById('name').value;
-            // Find the selected radio button's value
             const attendance = document.querySelector('input[name="attendance"]:checked').value;
             const message = document.getElementById('message-response').value;
             
-            // Your WhatsApp number without '+' or spaces
             const phoneNumber = '919907488075';
 
-            // Construct the pre-filled message
             let whatsappMessage = `Hey Sarup! It's ${name}.\n\nMy answer for our date is: *${attendance}*`;
             if (message) {
                 whatsappMessage += `\n\nAnd a little something for you:\n_"${message}"_`;
             }
 
-            // Create the WhatsApp URL
             const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(whatsappMessage)}`;
-
-            // Redirect the user to WhatsApp
             window.open(whatsappUrl, '_blank');
         });
 
