@@ -168,7 +168,8 @@
                 <!-- Message Tab -->
                 <div id="message" class="tab-content active">
                     <h2 class="text-4xl font-semibold mb-4 text-white">From My Heart</h2>
-                    <div class="space-y-4 text-white/90">
+                    <!-- Added bottom padding to this div to create scrollable space -->
+                    <div class="space-y-4 text-white/90 pb-40">
                         <p>Thank you for being everything to me ... muahhh, my perfect girlfriend.</p>
                         <p>I wanna kiss every little insecurity till they disappear, I wanna kiss the path you walk on, I wanna worship you like my goddess… and then f you hard till you are  screaming SARUPP to stop.</p>
                         <p>I cannot wait for the day I finally get to eat you up. Distance can't kill what I feel for you. You are mine, only mine.</p>
@@ -221,7 +222,8 @@
                             <label for="message-response" class="block text-sm font-medium text-white/90">A little message for me?</label>
                             <textarea id="message-response" name="message" rows="3" class="mt-1 block w-full bg-black/20 border-transparent rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-white/50 placeholder-white/60"></textarea>
                         </div>
-                        <div>
+                        <!-- Increased padding to the bottom of the button's container -->
+                        <div class="pb-32">
                             <button type="button" id="send-to-whatsapp" class="w-full bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 px-4 rounded-full transition duration-300 transform hover:scale-105">Send My Response</button>
                         </div>
                     </form>
