@@ -24,12 +24,9 @@
             left: 0;
             width: 100%;
             height: 100%;
-            /* Restored light pink dynamic gradient */
-            background: linear-gradient(135deg, #ffdde1, #ffc3a0, #ff9a9e);
+            background: linear-gradient(135deg, #ffdde1, #e6d4ff, #ffc3a0, #ff9a9e);
             background-size: 400% 400%;
             animation: gradient-animation 10s ease infinite;
-            /* Added subtle pattern overlay */
-            background-image: linear-gradient(135deg, #ffdde1, #ffc3a0, #ff9a9e), url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
             z-index: 100;
             display: flex;
             flex-direction: column;
@@ -84,28 +81,23 @@
             z-index: 2;
         }
         
-        #cake-text {
-            font-family: 'Caveat', cursive;
-            font-size: 2.2rem;
-            /* New dark lavender color */
-            color: #5c5470;
-            text-shadow: 0 1px 2px rgba(255,255,255,0.2);
-            position: absolute;
-            top: 35%;
-            left: 50%;
-            transform: translateX(-50%);
-            text-align: center;
-            line-height: 1;
-            pointer-events: none;
-            z-index: 3;
-        }
         #swipe-instruction {
-            margin-top: 2rem;
+            position: absolute;
+            top: 5vh;
             font-family: 'Caveat', cursive;
             font-size: 1.5rem;
             color: #8c5a5a;
             opacity: 0.8;
             animation: pulse 2s infinite;
+            z-index: 1;
+        }
+        #muahhh-text {
+            position: absolute;
+            bottom: 5vh;
+            font-family: 'Caveat', cursive;
+            font-size: 2.5rem;
+            color: #8c5a5a;
+            opacity: 0.9;
             z-index: 1;
         }
         @keyframes pulse {
@@ -244,22 +236,21 @@
     </style>
 </head>
 <body>
+    <audio id="birthday-audio" src="https://raw.githubusercontent.com/Sarup098/codebd/main/happy-birthday-334876.mp3"></audio>
 
-    <!-- NEW Cake Cutting Intro with your PNGs -->
     <div id="cake-intro">
+        <div id="swipe-instruction">Swipe down to cut the cake!</div>
         <div class="intro-shape intro-shape-1"></div>
         <div class="intro-shape intro-shape-2"></div>
         <div id="confetti-container"></div>
         <div id="cake-container">
-            <img id="cake-left" class="cake-piece" src="https://raw.githubusercontent.com/Sarup098/codebd/main/IMG_8237.png" alt="Left side of cake">
-            <img id="cake-right" class="cake-piece" src="https://raw.githubusercontent.com/Sarup098/codebd/main/IMG_8238.png" alt="Right side of cake">
-            <div id="cake-text">Happy<br>Birthday<br>ASSna</div>
+            <img id="cake-left" class="cake-piece" src="https://raw.githubusercontent.com/Sarup098/codebd/main/IMG_8240.png" alt="Left side of cake">
+            <img id="cake-right" class="cake-piece" src="https://raw.githubusercontent.com/Sarup098/codebd/main/IMG_8241.png" alt="Right side of cake">
             <canvas id="cut-canvas"></canvas>
         </div>
-        <div id="swipe-instruction">Swipe down to cut the cake!</div>
+        <div id="muahhh-text">muahhh!</div>
     </div>
 
-    <!-- Main Content (initially hidden) -->
     <div id="main-content" class="min-h-screen flex items-center justify-center p-4">
         <div class="background-container"></div>
         <div class="w-full max-w-md mx-auto">
@@ -276,7 +267,7 @@
                 </div>
                 <div class="content-area">
                     <div id="message" class="tab-content active"><h2 class="text-4xl font-semibold mb-4 text-white">From My Heart</h2><div class="space-y-4 text-white/90 pb-40"><p>Thank you for being everything to me ... muahhh, my perfect girlfriend.</p><p>I wanna kiss every little insecurity till they disappear, I wanna kiss the path you walk on, I wanna worship you like my goddess… and then f you hard till you are  screaming SARUPP to stop.</p><p>I cannot wait for the day I finally get to eat you up. Distance can't kill what I feel for you. You are mine, only mine.</p><p>Now send me a sexy snap baby, I need my gift too.</p><p>Forever yours!</p></div></div>
-                    <div id="video" class="tab-content"><h2 class="text-4xl font-semibold mb-4 text-white">For You</h2><div class="aspect-w-9 aspect-h-16 max-w-xs mx-auto rounded-lg overflow-hidden border-2 border-white/30"><iframe src="https://www.youtube.com/embed/c3MpiDSshRo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><p class="text-sm text-center mt-4 text-white/70">A small gift for my fav. Girl!</p></div>
+                    <div id="video" class="tab-content"><h2 class="text-4xl font-semibold mb-4 text-white">For You</h2><div class="aspect-w-9 aspect-h-16 max-w-xs mx-auto rounded-lg overflow-hidden border-2 border-white/30"><iframe src="https://www.youtube.com/embed/c3MpiDSshRo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><p class="text-sm text-center mt-4 text-white/70">A small gift for my fav Girl!!.</p></div>
                     <div id="date-night" class="tab-content text-center"><h2 class="text-4xl font-semibold mb-4 text-white">You're Invited!</h2><div class="bg-black/20 p-6 rounded-lg mb-6 text-left"><h3 class="text-4xl font-bold mb-3 text-white text-center">Jhalmuri Date Night</h3><p class="text-white/90 mb-2"><strong class="font-semibold">When:</strong> August 27th</p><p class="text-white/90 mb-4"><strong class="font-semibold">Time:</strong> 9:00 PM onwards</p><p class="text-white/80 mb-4">Let's make and eat Jhalmuri together!  At the end, we'll click a screenshot to remember our perfect date.</p><h4 class="font-semibold text-white mb-2 text-2xl">Your Ingredient Checklist:</h4><ul class="list-disc list-inside text-white/80 space-y-1"><li>Puffed rice (Muri)</li><li>wai-wai(veg ofcc)</li><li>Green chillies (or thika laal)</li><li>anything else you can lemon, onion, etc</li></ul></div><h2 class="text-4xl font-semibold mb-4 text-white">Will You Join Me?</h2><form class="space-y-4 text-left"><div><label for="name" class="block text-sm font-medium text-white/90">Your Name:</label><input type="text" id="name" name="name" required class="mt-1 block w-full bg-black/20 border-transparent rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-white/50 placeholder-white/60" placeholder="ASSna"></div><div><label class="block text-sm font-medium text-white/90">Your Answer:</label><div class="mt-2 space-y-2"><label class="inline-flex items-center"><input type="radio" name="attendance" value="Yes, a thousand times yes!" class="form-radio text-pink-400 focus:ring-pink-500" checked><span class="ml-2 text-white/90">Yes, a thousand times yes!</span></label><br><label class="inline-flex items-center"><input type="radio" name="attendance" value="Of course! Can't wait!" class="form-radio text-pink-400 focus:ring-pink-500"><span class="ml-2 text-white/90">Of course! Can't wait!</span></label></div></div><div><label for="message-response" class="block text-sm font-medium text-white/90">A little message for me?</label><textarea id="message-response" name="message" rows="3" class="mt-1 block w-full bg-black/20 border-transparent rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-white/50 placeholder-white/60"></textarea></div><div class="pb-32"><button type="button" id="send-to-whatsapp" class="w-full bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 px-4 rounded-full transition duration-300 transform hover:scale-105">Send My Response</button></div></form></div>
                 </div>
             </main>
@@ -291,6 +282,7 @@
         const cakeRight = document.getElementById('cake-right');
         const mainContent = document.getElementById('main-content');
         const canvas = document.getElementById('cut-canvas');
+        const birthdayAudio = document.getElementById('birthday-audio');
         const ctx = canvas.getContext('2d');
         let isDrawing = false;
         let hasCut = false;
@@ -339,6 +331,11 @@
             if (!isDrawing || hasCut) return;
             isDrawing = false;
             hasCut = true;
+            
+            // Play audio on user interaction
+            birthdayAudio.volume = 0.5;
+            birthdayAudio.play().catch(e => console.error("Audio play failed:", e));
+
             launchConfetti();
             cakeLeft.style.transform = 'translateX(-50%) rotate(-15deg) scale(0.8)';
             cakeRight.style.transform = 'translateX(50%) rotate(15deg) scale(0.8)';
