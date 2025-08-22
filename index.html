@@ -90,6 +90,8 @@
             opacity: 0.8;
             animation: pulse 2s infinite;
             z-index: 1;
+            /* Added padding */
+            padding: 0 1rem;
         }
         #muahhh-text {
             position: absolute;
@@ -99,6 +101,8 @@
             color: #8c5a5a;
             opacity: 0.9;
             z-index: 1;
+            /* Added padding */
+            padding: 0 1rem;
         }
         @keyframes pulse {
             0%, 100% { opacity: 0.8; }
@@ -267,7 +271,7 @@
                 </div>
                 <div class="content-area">
                     <div id="message" class="tab-content active"><h2 class="text-4xl font-semibold mb-4 text-white">From My Heart</h2><div class="space-y-4 text-white/90 pb-40"><p>Thank you for being everything to me ... muahhh, my perfect girlfriend.</p><p>I wanna kiss every little insecurity till they disappear, I wanna kiss the path you walk on, I wanna worship you like my goddess… and then f you hard till you are  screaming SARUPP to stop.</p><p>I cannot wait for the day I finally get to eat you up. Distance can't kill what I feel for you. You are mine, only mine.</p><p>Now send me a sexy snap baby, I need my gift too.</p><p>Forever yours!</p></div></div>
-                    <div id="video" class="tab-content"><h2 class="text-4xl font-semibold mb-4 text-white">For You</h2><div class="aspect-w-9 aspect-h-16 max-w-xs mx-auto rounded-lg overflow-hidden border-2 border-white/30"><iframe src="https://www.youtube.com/embed/c3MpiDSshRo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><p class="text-sm text-center mt-4 text-white/70">A small gift for my fav Girl!!.</p></div>
+                    <div id="video" class="tab-content"><h2 class="text-4xl font-semibold mb-4 text-white">For You</h2><div class="aspect-w-9 aspect-h-16 max-w-xs mx-auto rounded-lg overflow-hidden border-2 border-white/30"><iframe src="https://www.youtube.com/embed/c3MpiDSshRo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><p class="text-sm text-center mt-4 text-white/70">a small gift for my fav Girl!!</p></div>
                     <div id="date-night" class="tab-content text-center"><h2 class="text-4xl font-semibold mb-4 text-white">You're Invited!</h2><div class="bg-black/20 p-6 rounded-lg mb-6 text-left"><h3 class="text-4xl font-bold mb-3 text-white text-center">Jhalmuri Date Night</h3><p class="text-white/90 mb-2"><strong class="font-semibold">When:</strong> August 27th</p><p class="text-white/90 mb-4"><strong class="font-semibold">Time:</strong> 9:00 PM onwards</p><p class="text-white/80 mb-4">Let's make and eat Jhalmuri together!  At the end, we'll click a screenshot to remember our perfect date.</p><h4 class="font-semibold text-white mb-2 text-2xl">Your Ingredient Checklist:</h4><ul class="list-disc list-inside text-white/80 space-y-1"><li>Puffed rice (Muri)</li><li>wai-wai(veg ofcc)</li><li>Green chillies (or thika laal)</li><li>anything else you can lemon, onion, etc</li></ul></div><h2 class="text-4xl font-semibold mb-4 text-white">Will You Join Me?</h2><form class="space-y-4 text-left"><div><label for="name" class="block text-sm font-medium text-white/90">Your Name:</label><input type="text" id="name" name="name" required class="mt-1 block w-full bg-black/20 border-transparent rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-white/50 placeholder-white/60" placeholder="ASSna"></div><div><label class="block text-sm font-medium text-white/90">Your Answer:</label><div class="mt-2 space-y-2"><label class="inline-flex items-center"><input type="radio" name="attendance" value="Yes, a thousand times yes!" class="form-radio text-pink-400 focus:ring-pink-500" checked><span class="ml-2 text-white/90">Yes, a thousand times yes!</span></label><br><label class="inline-flex items-center"><input type="radio" name="attendance" value="Of course! Can't wait!" class="form-radio text-pink-400 focus:ring-pink-500"><span class="ml-2 text-white/90">Of course! Can't wait!</span></label></div></div><div><label for="message-response" class="block text-sm font-medium text-white/90">A little message for me?</label><textarea id="message-response" name="message" rows="3" class="mt-1 block w-full bg-black/20 border-transparent rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-white/50 placeholder-white/60"></textarea></div><div class="pb-32"><button type="button" id="send-to-whatsapp" class="w-full bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 px-4 rounded-full transition duration-300 transform hover:scale-105">Send My Response</button></div></form></div>
                 </div>
             </main>
@@ -332,8 +336,6 @@
             isDrawing = false;
             hasCut = true;
             
-            // Play audio on user interaction
-            birthdayAudio.volume = 0.5;
             birthdayAudio.play().catch(e => console.error("Audio play failed:", e));
 
             launchConfetti();
@@ -383,6 +385,17 @@
 
         // --- On Page Load Logic ---
         document.addEventListener('DOMContentLoaded', function() {
+            const playAudioOnFirstInteraction = () => {
+                birthdayAudio.volume = 0.5;
+                birthdayAudio.play().catch(e => console.error("Audio play failed:", e));
+                // Remove the listener after the first interaction
+                cakeIntro.removeEventListener('touchstart', playAudioOnFirstInteraction);
+                cakeIntro.removeEventListener('mousedown', playAudioOnFirstInteraction);
+            };
+            cakeIntro.addEventListener('touchstart', playAudioOnFirstInteraction, { once: true });
+            cakeIntro.addEventListener('mousedown', playAudioOnFirstInteraction, { once: true });
+
+
             // --- Particle Generation ---
             const particleContainer = document.querySelector('.background-container');
             const particleCount = 12;
