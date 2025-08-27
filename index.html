@@ -24,7 +24,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: #1a1a1a;
+            background-color: #333; /* Dark background for the cake */
             z-index: 200;
             display: flex;
             flex-direction: column;
@@ -35,61 +35,122 @@
         #start-button {
             font-family: 'Caveat', cursive;
             font-size: 2rem;
-            color: #fff;
-            background: #c780fa;
+            color: #1a1a1a;
+            background: #fff;
             padding: 1rem 2rem;
             border-radius: 99px;
             cursor: pointer;
             border: none;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
-        /* Simplified Cake and Candles */
-        #simple-cake-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        #simple-cake {
-            width: 280px;
-            height: 120px;
-            background-color: #2bd6de; /* New cake color */
-            border-radius: 10px;
+        
+        /* New Cake Styles from your example */
+        .cake {
             position: relative;
-            border: 4px solid #fff;
+            width: 250px;
+            height: 200px;
+            margin-top: -70px;
         }
-        #simple-candles {
-            display: flex;
-            gap: 40px;
+        .plate {
+            width: 270px;
+            height: 110px;
             position: absolute;
-            top: -50px;
-            left: 50%;
-            transform: translateX(-50%);
+            bottom: -10px;
+            left: -10px;
+            background-color: #ccc;
+            border-radius: 50%;
+            box-shadow: 0 2px 0 #b3b3b3, 0 4px 0 #b3b3b3, 0 5px 40px rgba(0, 0, 0, 0.5);
         }
-        .simple-candle {
-            width: 12px;
+        .cake > * {
+            position: absolute;
+        }
+        .layer {
+            display: block;
+            width: 250px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: #553c13;
+            box-shadow: 0 2px 0px #6a4b18, 0 4px 0px #33240b, 0 6px 0px #32230b, 0 8px 0px #31230b, 0 10px 0px #30220b, 0 12px 0px #2f220b, 0 14px 0px #2f210a, 0 16px 0px #2e200a, 0 18px 0px #2d200a, 0 20px 0px #2c1f0a, 0 22px 0px #2b1f0a, 0 24px 0px #2a1e09, 0 26px 0px #2a1d09, 0 28px 0px #291d09, 0 30px 0px #281c09;
+        }
+        .layer-top { top: 0px; }
+        .layer-middle { top: 33px; }
+        .layer-bottom { top: 66px; }
+        .icing {
+            top: 2px;
+            left: 5px;
+            background-color: #2bd6de; /* Changed icing color */
+            width: 240px;
+            height: 90px;
+            border-radius: 50%;
+        }
+        .icing:before {
+            content: "";
+            position: absolute;
+            top: 4px;
+            right: 5px;
+            bottom: 6px;
+            left: 5px;
+            background-color: #a0f0f3; /* Lighter shade of new color */
+            box-shadow: 0 0 4px #a0f0f3, 0 0 4px #a0f0f3, 0 0 4px #a0f0f3;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        .drip {
+            display: block;
+            width: 50px;
+            height: 60px;
+            border-bottom-left-radius: 25px;
+            border-bottom-right-radius: 25px;
+            background-color: #2bd6de; /* Changed drip color */
+        }
+        .drip1 { top: 53px; left: 5px; transform: skewY(15deg); height: 48px; width: 40px; }
+        .drip2 { top: 69px; left: 181px; transform: skewY(-15deg); }
+        .drip3 { top: 54px; left: 90px; width: 80px; border-bottom-left-radius: 40px; border-bottom-right-radius: 40px; }
+        .candle {
+            background-color: #7b020b;
+            width: 16px;
             height: 50px;
-            background: linear-gradient(to bottom, #fff, #eee);
-            border-radius: 3px;
-            position: relative;
+            border-radius: 8px / 4px;
+            top: -20px;
+            left: 50%;
+            margin-left: -8px;
+            z-index: 10;
+        }
+        .candle:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 16px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #ad030f;
         }
         .flame {
             position: absolute;
-            top: -20px;
-            left: 50%;
-            transform: translateX(-50%);
+            background-color: orange;
             width: 15px;
-            height: 25px;
-            background-color: #ffc400;
-            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-            animation: flicker 1s ease-in-out infinite;
-            transition: opacity 0.3s ease;
+            height: 35px;
+            border-radius: 10px 10px 10px 10px / 25px 25px 10px 10px;
+            top: -34px;
+            left: 50%;
+            margin-left: -7.5px;
+            z-index: 10;
+            box-shadow: 0 0 10px rgba(255, 165, 0, 0.5), 0 0 20px rgba(255, 165, 0, 0.5), 0 0 60px rgba(255, 165, 0, 0.5), 0 0 80px rgba(255, 165, 0, 0.5);
+            transform-origin: 50% 90%;
+            animation: flicker 1s ease-in-out alternate infinite;
+            transition: opacity 0.3s ease, transform 0.3s ease;
         }
         @keyframes flicker {
-            0%, 100% { transform: translateX(-50%) scale(1); }
-            50% { transform: translateX(-50%) scale(1.05); }
+            0% { transform: skewX(5deg); box-shadow: 0 0 10px rgba(255, 165, 0, 0.2), 0 0 20px rgba(255, 165, 0, 0.2), 0 0 60px rgba(255, 165, 0, 0.2), 0 0 80px rgba(255, 165, 0, 0.2); }
+            25% { transform: skewX(-5deg); box-shadow: 0 0 10px rgba(255, 165, 0, 0.5), 0 0 20px rgba(255, 165, 0, 0.5), 0 0 60px rgba(255, 165, 0, 0.5), 0 0 80px rgba(255, 165, 0, 0.5); }
+            50% { transform: skewX(10deg); box-shadow: 0 0 10px rgba(255, 165, 0, 0.3), 0 0 20px rgba(255, 165, 0, 0.3), 0 0 60px rgba(255, 165, 0, 0.3), 0 0 80px rgba(255, 165, 0, 0.3); }
+            75% { transform: skewX(-10deg); box-shadow: 0 0 10px rgba(255, 165, 0, 0.4), 0 0 20px rgba(255, 165, 0, 0.4), 0 0 60px rgba(255, 165, 0, 0.4), 0 0 80px rgba(255, 165, 0, 0.4); }
+            100% { transform: skewX(5deg); box-shadow: 0 0 10px rgba(255, 165, 0, 0.5), 0 0 20px rgba(255, 165, 0, 0.5), 0 0 60px rgba(255, 165, 0, 0.5), 0 0 80px rgba(255, 165, 0, 0.5); }
         }
         .flame.out {
             opacity: 0;
+            transform: scale(0);
         }
         #blow-instruction {
             margin-top: 2rem;
@@ -323,12 +384,20 @@
     <!-- NEW Candle Blowing Screen -->
     <div id="candle-screen">
         <button id="start-button">Tap to make a wish!</button>
-        <div id="simple-cake-container" style="display: none;">
-            <div id="simple-cake">
-                <div id="simple-candles"></div>
+        <div class="cake" id="cake-holder" style="display: none;">
+            <div class="plate"></div>
+            <div class="layer layer-bottom"></div>
+            <div class="layer layer-middle"></div>
+            <div class="layer layer-top"></div>
+            <div class="icing"></div>
+            <div class="drip drip1"></div>
+            <div class="drip drip2"></div>
+            <div class="drip drip3"></div>
+            <div class="candle">
+                <div class="flame"></div>
             </div>
         </div>
-        <p id="blow-instruction" style="display: none;">Now... blow them out!</p>
+        <p id="blow-instruction" style="display: none;">Make a wish and blow out the candle!</p>
     </div>
 
     <!-- Cake Cutting Intro (initially hidden) -->
@@ -361,8 +430,8 @@
                     <button class="tab-button w-full py-2 px-4 rounded-full z-10" onclick="showTab('date-night', this)" title="Date Night"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" /></svg></button>
                 </div>
                 <div class="content-area">
-                    <div id="message" class="tab-content active"><h2 class="text-4xl font-semibold mb-4 text-white">From My Heart</h2><div class="space-y-4 text-white/90 pb-40"><p>Thank you for being everything to me ... muahhh, my perfect girlfriend.</p><p>I wanna kiss every little insecurity till they disappear, I wanna kiss the path you walk on, I wanna worship you like my goddess… and then f you hard till you are  screaming SARUPP to stop.</p><p>I cannot wait for the day I finally get to eat you up. Distance can't kill what I feel for you. You are mine, only mine.</p><p>Now send me a sexy snap baby, I need my gift too.</p><p>Forever yours!</p></div></div>
-                    <div id="video" class="tab-content"><h2 class="text-4xl font-semibold mb-4 text-white">For You</h2><div class="aspect-w-9 aspect-h-16 max-w-xs mx-auto rounded-lg overflow-hidden border-2 border-white/30"><iframe src="https://www.youtube.com/embed/ca1PeKl931E" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><p class="text-sm text-center mt-4 text-white/70">a small gift for my fav Girl!!</p></div>
+                    <div id="message" class="tab-content active"><h2 class="text-4xl font-semibold mb-4 text-white">From My Heart</h2><div class="space-y-4 text-white/90 pb-40"><p>Thank you for being everything to me ... muahhh, my perfect girlfriend.</p><p>YOU cnnot read this message this was just for ASSna<p>Forever yours!</p></div></div>
+                    <div id="video" class="tab-content"><h2 class="text-4xl font-semibold mb-4 text-white">For You</h2><div class="aspect-w-9 aspect-h-16 max-w-xs mx-auto rounded-lg overflow-hidden border-2 border-white/30"><iframe src="https://www.youtube.com/embed/XcbP_cCkQqs" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><p class="text-sm text-center mt-4 text-white/70">a small gift for my fav Girl!!</p></div>
                     <div id="date-night" class="tab-content text-center"><h2 class="text-4xl font-semibold mb-4 text-white">You're Invited!</h2><div class="bg-black/20 p-6 rounded-lg mb-6 text-left"><h3 class="text-4xl font-bold mb-3 text-white text-center">Jhalmuri Date Night</h3><p class="text-white/90 mb-2"><strong class="font-semibold">When:</strong> August 27th</p><p class="text-white/90 mb-4"><strong class="font-semibold">Time:</strong> 9:00 PM onwards</p><p class="text-white/80 mb-4">Let's make and eat Jhalmuri together!  At the end, we'll click a screenshot to remember our perfect date.</p><h4 class="font-semibold text-white mb-2 text-2xl">Your Ingredient Checklist:</h4><ul class="list-disc list-inside text-white/80 space-y-1"><li>Puffed rice (Muri)</li><li>wai-wai(veg ofcc)</li><li>Green chillies (or thika laal)</li><li>anything else you can lemon, onion, etc</li></ul></div><h2 class="text-4xl font-semibold mb-4 text-white">Will You Join Me?</h2><form class="space-y-4 text-left"><div><label for="name" class="block text-sm font-medium text-white/90">Your Name:</label><input type="text" id="name" name="name" required class="mt-1 block w-full bg-black/20 border-transparent rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-white/50 placeholder-white/60" placeholder="ASSna"></div><div><label class="block text-sm font-medium text-white/90">Your Answer:</label><div class="mt-2 space-y-2"><label class="inline-flex items-center"><input type="radio" name="attendance" value="Yes, a thousand times yes!" class="form-radio text-pink-400 focus:ring-pink-500" checked><span class="ml-2 text-white/90">Yes, a thousand times yes!</span></label><br><label class="inline-flex items-center"><input type="radio" name="attendance" value="Of course! Can't wait!" class="form-radio text-pink-400 focus:ring-pink-500"><span class="ml-2 text-white/90">Of course! Can't wait!</span></label></div></div><div><label for="message-response" class="block text-sm font-medium text-white/90">A little message for me?</label><textarea id="message-response" name="message" rows="3" class="mt-1 block w-full bg-black/20 border-transparent rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-white/50 placeholder-white/60"></textarea></div><div class="pb-32"><button type="button" id="send-to-whatsapp" class="w-full bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 px-4 rounded-full transition duration-300 transform hover:scale-105">Send My Response</button></div></form></div>
                 </div>
             </main>
@@ -373,10 +442,9 @@
         // --- Candle Blowing Logic ---
         const candleScreen = document.getElementById('candle-screen');
         const startButton = document.getElementById('start-button');
-        const simpleCakeContainer = document.getElementById('simple-cake-container');
-        const simpleCandles = document.getElementById('simple-candles');
+        const cakeHolder = document.getElementById('cake-holder');
         const blowInstruction = document.getElementById('blow-instruction');
-        let flames = [];
+        const flame = document.querySelector('#cake-holder .flame');
         let audioContext, analyser, dataArray;
 
         startButton.addEventListener('click', async () => {
@@ -390,45 +458,32 @@
                 dataArray = new Uint8Array(analyser.frequencyBinCount);
 
                 startButton.style.display = 'none';
-                simpleCakeContainer.style.display = 'flex';
+                cakeHolder.style.display = 'block';
                 blowInstruction.style.display = 'block';
-                
-                for (let i = 0; i < 4; i++) {
-                    const candle = document.createElement('div');
-                    candle.className = 'simple-candle';
-                    const flame = document.createElement('div');
-                    flame.className = 'flame';
-                    candle.appendChild(flame);
-                    simpleCandles.appendChild(candle);
-                    flames.push(flame);
-                }
                 
                 detectBlow();
             } catch (err) {
                 console.error('Microphone access denied:', err);
-                alert('Please allow microphone access to blow out the candles!');
+                alert('Please allow microphone access to blow out the candle!');
             }
         });
 
         function detectBlow() {
+            if (!flame || flame.classList.contains('out')) return;
+
             analyser.getByteFrequencyData(dataArray);
             let sum = dataArray.reduce((a, b) => a + b, 0);
             let average = sum / dataArray.length;
 
             if (average > 60) {
-                const litFlames = flames.filter(f => !f.classList.contains('out'));
-                if (litFlames.length > 0) {
-                    litFlames[litFlames.length - 1].classList.add('out');
-                }
-            }
-
-            const remainingFlames = flames.filter(f => !f.classList.contains('out'));
-            if (remainingFlames.length === 0 && flames.length > 0) {
-                candleScreen.style.opacity = '0';
+                flame.classList.add('out');
                 setTimeout(() => {
-                    candleScreen.style.display = 'none';
-                    document.getElementById('cake-intro').style.display = 'flex';
-                }, 1000);
+                    candleScreen.style.opacity = '0';
+                    setTimeout(() => {
+                        candleScreen.style.display = 'none';
+                        document.getElementById('cake-intro').style.display = 'flex';
+                    }, 1000);
+                }, 500);
             } else {
                 requestAnimationFrame(detectBlow);
             }
